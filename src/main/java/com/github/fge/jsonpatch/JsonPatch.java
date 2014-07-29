@@ -32,6 +32,7 @@ import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.ImmutableList;
 
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -145,7 +146,19 @@ public final class JsonPatch
     {
         BUNDLE.checkNotNull(node, "jsonPatch.nullInput");
         JsonNode ret = node;
-        for (final JsonPatchOperation operation: operations)
+
+        List<JsonPatchOperation> nonReplaceOp = new LinkedList<JsonPatchOperation>();
+
+        for(final JsonPatchOperation operation: operations){
+            if("replace".equals(operation.op)){
+                ret = operation.apply(ret);
+            }
+            else {
+                nonReplaceOp.add(operation);
+            }
+        }
+
+        for (final JsonPatchOperation operation: nonReplaceOp)
             ret = operation.apply(ret);
 
         return ret;

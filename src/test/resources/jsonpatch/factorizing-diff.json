@@ -304,5 +304,15 @@
         { "op": "move", "from": "/b/0", "path": "/c"},
         { "op": "add", "path": "/d", "value": 0}
         ]
+    },
+    {
+        "first": ["a","b","c","d","e"],
+        "second": ["e","a","f","c","d","b"],
+        "patch": [
+        {"op": "add", "path": "/0", "value": "e"},
+        {"op": "remove", "path": "/2"},
+        {"op": "add", "path": "/2", "value": "f"},
+        {"op": "replace", "path": "/4", "value": "b"}
+        ]
     }
 ]
